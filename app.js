@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { limiter } = require('./utils/constants');
 const { MONGO_ADDRESS } = require('./utils/config');
 
@@ -12,6 +13,8 @@ mongoose.connect(MONGO_ADDRESS, {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
+app.use(cors());
 
 app.use(bodyParser.json());
 
