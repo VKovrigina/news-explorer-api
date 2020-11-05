@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError.js');
 const { createUser, login } = require('./controllers/users');
@@ -19,6 +20,8 @@ mongoose.connect(MONGO_ADDRESS, {
 });
 
 app.use(cors());
+
+app.use(helmet());
 
 app.use(bodyParser.json());
 
