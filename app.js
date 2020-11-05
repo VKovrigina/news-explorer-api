@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError.js');
+const { createUser, login } = require('./controllers/users');
 const { limiter } = require('./utils/constants');
 const { MONGO_ADDRESS } = require('./utils/config');
 
@@ -24,6 +25,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(limiter);
+
+app.post('/signin', login);
+
+app.post('/signup', createUser);
 
 app.all('*', () => {
   throw new NotFoundError(notFoundRouteMessage);
