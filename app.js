@@ -7,6 +7,7 @@ const NotFoundError = require('./errors/NotFoundError.js');
 const { createUser, login } = require('./controllers/users');
 const { limiter } = require('./utils/constants');
 const { MONGO_ADDRESS } = require('./utils/config');
+const auth = require('./middlewares/auth');
 
 const { errorServerMessage, notFoundRouteMessage } = require('./utils/constants');
 
@@ -21,17 +22,19 @@ mongoose.connect(MONGO_ADDRESS, {
 
 app.use(cors());
 
-app.use(helmet());
-
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(helmet());
 
 app.use(limiter);
 
 app.post('/signin', login);
 
 app.post('/signup', createUser);
+
+app.use(auth);
 
 app.all('*', () => {
   throw new NotFoundError(notFoundRouteMessage);
