@@ -7,8 +7,7 @@ const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const { limiter } = require('./utils/constants');
 const { MONGO_ADDRESS } = require('./utils/config');
-
-const { errorServerMessage } = require('./utils/constants');
+const handlerErrors = require('./middlewares/handlerErrors');
 
 const app = express();
 
@@ -31,18 +30,6 @@ app.use(cookieParser());
 
 app.use(router);
 
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? errorServerMessage
-        : message,
-    });
-
-  next();
-});
+app.use(handlerErrors);
 
 module.exports = app;
