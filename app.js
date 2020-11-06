@@ -8,6 +8,7 @@ const { createUser, login } = require('./controllers/users');
 const { limiter } = require('./utils/constants');
 const { MONGO_ADDRESS } = require('./utils/config');
 const auth = require('./middlewares/auth');
+const checkPassword = require('./middlewares/checkPassword');
 
 const { errorServerMessage, notFoundRouteMessage } = require('./utils/constants');
 
@@ -30,9 +31,9 @@ app.use(helmet());
 
 app.use(limiter);
 
-app.post('/signin', login);
+app.post('/signin', checkPassword, login);
 
-app.post('/signup', createUser);
+app.post('/signup', checkPassword, createUser);
 
 app.use(auth);
 

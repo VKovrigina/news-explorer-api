@@ -1,6 +1,12 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const {
+  uniqueEmailMessage,
+  createUserMessage,
+  loginMessage,
+  loginErrorMesaage,
+} = require('../utils/constants');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 const BadRequestError = require('../errors/BadRequestError');
@@ -19,15 +25,15 @@ module.exports.createUser = (req, res, next) => {
       email: userEmail,
       password: hash,
     }))
-    .then((user) => res
+    .then(() => res
       .status(200)
-      .send({ message: `Пользователь с именем '${user.name}' успешно создан!` }))
+      .send({ message: createUserMessage }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new BadRequestError('Введены некорректные данные...');
+        throw new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`);
       }
       if (err.code === 11000 && err.name === 'MongoError') {
-        throw new ConflictError('Пользователь с таким email уже существует');
+        throw new ConflictError(uniqueEmailMessage);
       }
       throw err;
     })
@@ -48,10 +54,10 @@ module.exports.login = (req, res, next) => {
         .cookie('token', token, {
           httpOnly: true,
         })
-        .send({ message: 'Аутентификация прошла успешно' })
+        .send({ message: loginMessage })
         .end();
     })
     .catch(() => {
-      next(new UnauthorizedError('Необходима авторизация'));
+      next(new UnauthorizedError(loginErrorMesaage));
     });
 };
