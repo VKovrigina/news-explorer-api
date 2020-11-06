@@ -2,6 +2,9 @@ const Article = require('../models/article');
 const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const {
+  deleteArticleMessage, deleteArticleErrorMessage, invalidId, notFoundArticleMessage,
+} = require('../utils/constants');
 
 module.exports.createArticle = (req, res, next) => {
   const {
@@ -49,22 +52,22 @@ module.exports.getArticle = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.deleteCardById = (req, res, next) => {
-  Article.findOne({ _id: req.params.id })
-    .orFail(new NotFoundError('Упс! Запрашиваемая карточка не найдена'))
-    .then((card) => {
-      if (card.owner._id.equals(req.user._id)) {
-        card.remove();
+module.exports.deleteArticleById = (req, res, next) => {
+  Article.findOne({ _id: req.params.articleId }).select('+owner')
+    .orFail(new NotFoundError(notFoundArticleMessage))
+    .then((article) => {
+      if (article.owner.equals(req.user._id)) {
+        article.remove();
         res
           .status(200)
-          .send({ message: 'Карточка удалена.' });
+          .send({ message: deleteArticleMessage });
       } else {
-        throw new UnauthorizedError('Вы не можете удалить чужую карточку, как бы она вам не нравилась..');
+        throw new UnauthorizedError(deleteArticleErrorMessage);
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError('Проверьте валидность идентификатора');
+        throw new BadRequestError(invalidId);
       }
       throw err;
     })

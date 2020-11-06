@@ -20,6 +20,10 @@ const maxlengthNameMessage = 'Максимальная длина поля "name
 const createUserMessage = 'Пользователь успешно создан!';
 const loginMessage = 'Аутентификация прошла успешно';
 const loginErrorMesaage = 'Необходима авторизация';
+const deleteArticleMessage = 'Статья удалена';
+const deleteArticleErrorMessage = 'Вы не можете удалить чужую статью';
+const invalidId = 'Проверьте валидность идентификатора';
+const notFoundArticleMessage = 'Упс! Запрашиваемая статья не найдена';
 
 module.exports = {
   limiter,
@@ -37,4 +41,8 @@ module.exports = {
   createUserMessage,
   loginMessage,
   loginErrorMesaage,
+  deleteArticleMessage,
+  invalidId,
+  deleteArticleErrorMessage,
+  notFoundArticleMessage,
 };
