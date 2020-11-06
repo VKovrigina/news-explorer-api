@@ -38,14 +38,13 @@ module.exports.createArticle = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.getCards = (req, res, next) => {
-  Article.find({})
+module.exports.getArticle = (req, res, next) => {
+  Article.find({ owner: req.user._id })
     .sort({ createdAt: -1 })
-    .populate(['owner', 'likes'])
-    .then((cards) => {
+    .then((article) => {
       res
         .status(200)
-        .send({ data: cards });
+        .send({ data: article });
     })
     .catch(next);
 };
