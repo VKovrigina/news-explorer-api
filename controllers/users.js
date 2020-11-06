@@ -53,6 +53,7 @@ module.exports.login = (req, res, next) => {
         .status(200)
         .cookie('token', token, {
           httpOnly: true,
+          sameSite: true,
         })
         .send({ message: loginMessage })
         .end();
