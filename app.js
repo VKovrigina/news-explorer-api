@@ -20,16 +20,11 @@ mongoose.connect(MONGO_ADDRESS, {
 
 app.use(cors());
 app.use(helmet());
-
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(limiter);
 app.use(cookieParser());
-
 app.use(router);
-
 app.use(handlerErrors);
 
 module.exports = app;
