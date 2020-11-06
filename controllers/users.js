@@ -8,7 +8,7 @@ const {
   loginErrorMesaage,
 } = require('../utils/constants');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET } = require('../utils/config');
 const BadRequestError = require('../errors/BadRequestError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const ConflictError = require('../errors/ConflictError');
@@ -46,7 +46,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        JWT_SECRET,
         { expiresIn: '1d' },
       );
       res
