@@ -3,14 +3,12 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
-const NotFoundError = require('./errors/NotFoundError.js');
-const { createUser, login } = require('./controllers/users');
+const cookieParser = require('cookie-parser');
+const router = require('./routes/index');
 const { limiter } = require('./utils/constants');
 const { MONGO_ADDRESS } = require('./utils/config');
-const auth = require('./middlewares/auth');
-const checkPassword = require('./middlewares/checkPassword');
 
-const { errorServerMessage, notFoundRouteMessage } = require('./utils/constants');
+const { errorServerMessage } = require('./utils/constants');
 
 const app = express();
 
@@ -22,24 +20,16 @@ mongoose.connect(MONGO_ADDRESS, {
 });
 
 app.use(cors());
+app.use(helmet());
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(helmet());
-
 app.use(limiter);
+app.use(cookieParser());
 
-app.post('/signin', checkPassword, login);
-
-app.post('/signup', checkPassword, createUser);
-
-app.use(auth);
-
-app.all('*', () => {
-  throw new NotFoundError(notFoundRouteMessage);
-});
+app.use(router);
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
