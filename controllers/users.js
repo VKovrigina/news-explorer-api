@@ -62,3 +62,17 @@ module.exports.login = (req, res, next) => {
       next(new UnauthorizedError(loginErrorMesaage));
     });
 };
+
+module.exports.getUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => res
+      .status(200)
+      .send({
+        _id: user._id,
+        email: user.email,
+        name: user.name,
+      }))
+    .catch((err) => {
+      next(err);
+    });
+};
