@@ -24,6 +24,13 @@ const deleteArticleMessage = 'Статья удалена';
 const deleteArticleErrorMessage = 'Вы не можете удалить чужую статью';
 const invalidId = 'Проверьте валидность идентификатора';
 const notFoundArticleMessage = 'Упс! Запрашиваемая статья не найдена';
+const requiredKeywordMessage = 'Поле "keyword" должно быть заполнено';
+const requiredTitleMessage = 'Поле "title" должно быть заполнено';
+const requiredTextMessage = 'Поле "text" должно быть заполнено';
+const requiredDateMessage = 'Поле "data" должно быть заполнено';
+const requiredSourceMessage = 'Поле "source" должно быть заполнено';
+const requiredLinkMessage = 'Поле "link" должно быть заполнено';
+const requiredImageMessage = 'Поле "image" должно быть заполнено';
 
 module.exports = {
   limiter,
@@ -45,4 +52,11 @@ module.exports = {
   invalidId,
   deleteArticleErrorMessage,
   notFoundArticleMessage,
+  requiredKeywordMessage,
+  requiredTitleMessage,
+  requiredTextMessage,
+  requiredDateMessage,
+  requiredSourceMessage,
+  requiredLinkMessage,
+  requiredImageMessage,
 };

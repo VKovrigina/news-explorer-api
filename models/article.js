@@ -1,31 +1,40 @@
 const mongoose = require('mongoose');
 const isURL = require('validator/lib/isURL');
-const { invalidLinkMessage } = require('../utils/constants');
+const {
+  invalidLinkMessage,
+  requiredKeywordMessage,
+  requiredTitleMessage,
+  requiredTextMessage,
+  requiredDateMessage,
+  requiredSourceMessage,
+  requiredLinkMessage,
+  requiredImageMessage,
+} = require('../utils/constants');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
     type: String,
-    required: true,
+    required: [true, requiredKeywordMessage],
   },
   title: {
     type: String,
-    required: true,
+    required: [true, requiredTitleMessage],
   },
   text: {
     type: String,
-    required: true,
+    required: [true, requiredTextMessage],
   },
   date: {
     type: String,
-    required: true,
+    required: [true, requiredDateMessage],
   },
   source: {
     type: String,
-    required: true,
+    required: [true, requiredSourceMessage],
   },
   link: {
     type: String,
-    required: true,
+    required: [true, requiredLinkMessage],
     validate: {
       validator: (v) => isURL(v),
       message: invalidLinkMessage,
@@ -33,7 +42,7 @@ const articleSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    required: [true, requiredImageMessage],
     validate: {
       validator: (v) => isURL(v),
       message: invalidLinkMessage,
