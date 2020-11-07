@@ -31,6 +31,7 @@ const requiredDateMessage = 'Поле "data" должно быть заполн�
 const requiredSourceMessage = 'Поле "source" должно быть заполнено';
 const requiredLinkMessage = 'Поле "link" должно быть заполнено';
 const requiredImageMessage = 'Поле "image" должно быть заполнено';
+const minlengthPasswordMessage = 'Минимальная длина поля "password" - 5 символов';
 
 module.exports = {
   limiter,
@@ -59,4 +60,5 @@ module.exports = {
   requiredSourceMessage,
   requiredLinkMessage,
   requiredImageMessage,
+  minlengthPasswordMessage,
 };

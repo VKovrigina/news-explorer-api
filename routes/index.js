@@ -6,9 +6,10 @@ const auth = require('../middlewares/auth');
 const { notFoundRouteMessage } = require('../utils/constants');
 const { usersRouter } = require('./users');
 const { articlesRouter } = require('./articles');
+const { validateCreateUser, validateLogin } = require('../middlewares/requestValidation');
 
-router.post('/signin', checkPassword, login);
-router.post('/signup', checkPassword, createUser);
+router.post('/signin', checkPassword, validateLogin, login);
+router.post('/signup', checkPassword, validateCreateUser, createUser);
 router.use(auth);
 router.use('/users', usersRouter);
 router.use('/articles', articlesRouter);

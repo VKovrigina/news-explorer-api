@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const { errors } = require('celebrate');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(limiter);
 app.use(cookieParser());
 app.use(router);
+app.use(errors());
 app.use(handlerErrors);
 
 module.exports = app;
