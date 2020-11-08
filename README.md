@@ -23,6 +23,6 @@
 
 
 ## :link: Ссылки
-Проект задеплоен тут :arrow_right: 
+Проект задеплоен тут :arrow_right: https://api.new-s.students.nomoreparties.co
 
 Репозиторий, использующий этот API :arrow_right: (скоро будет)
