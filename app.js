@@ -12,10 +12,10 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const app = express();
 
 app.use(cors());
+app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(limiter);
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(router);
