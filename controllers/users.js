@@ -6,6 +6,7 @@ const {
   createUserMessage,
   loginMessage,
   loginErrorMesaage,
+  logoutMessage,
 } = require('../utils/constants');
 
 const { JWT_SECRET, NODE_ENV, JWT_SECRET_DEV } = require('../utils/config');
@@ -75,4 +76,10 @@ module.exports.getUser = (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+};
+
+module.exports.logout = (req, res) => {
+  res.clearCookie('token')
+    .status(200)
+    .send({ message: logoutMessage });
 };
