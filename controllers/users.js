@@ -78,8 +78,10 @@ module.exports.getUser = (req, res, next) => {
     });
 };
 
-module.exports.logout = (req, res) => {
-  res.clearCookie('token')
-    .status(200)
-    .send({ message: logoutMessage });
+module.exports.logout = (req, res, next) => {
+  try {
+    res.clearCookie('token')
+      .status(200)
+      .send({ message: logoutMessage });
+  } catch (err) { next(err); }
 };
