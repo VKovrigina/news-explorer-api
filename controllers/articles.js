@@ -30,7 +30,7 @@ module.exports.createArticle = (req, res, next) => {
     .then((article) => {
       res
         .status(200)
-        .send({ data: { _id: article._id } });
+        .send({ data: article });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

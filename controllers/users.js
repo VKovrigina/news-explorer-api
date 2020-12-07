@@ -48,11 +48,12 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV,
-        { expiresIn: '1d' },
+        { expiresIn: '2d' },
       );
       res
         .status(200)
         .cookie('token', token, {
+          maxAge: 3600000 * 24 * 2,
           httpOnly: true,
           sameSite: true,
         })
