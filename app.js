@@ -12,7 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: ['http://localhost:3000', 'https://new-s.students.nomoreparties.co', 'https://www.new-s.students.nomoreparties.co'] }));
+app.use(cors({ credentials: true, origin: ['http://localhost:3000', 'https://new-s.students.nomoreparties.co', 'https://www.new-s.students.nomoreparties.co', 'https://vkovrigina.github.io/news-explorer-frontend/'] }));
 app.use(limiter);
 app.use(helmet());
 app.use(bodyParser.json());
